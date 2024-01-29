@@ -64,9 +64,9 @@ const images = [
     },
   ];
 
-// 1. Create an array called galleryItemsMarkup;
-// 2. loop through the given array
-// 3. In each iteration create a new element usinf this template
+// 1. Create an array called galleryItemsMarkup +
+// 2. loop through the given array + 
+// 3. In each iteration create a new element using this template +
 {/* <li class="gallery-item">
   <a class="gallery-link" href="large-image.jpg">
     <img
@@ -82,3 +82,26 @@ const images = [
 // 6. Delagate, addEventListener to the list. 
 // 7. Add library
 // 8. Continue 
+// 9. What can I do with automatic downloading
+
+const galleryItemsMarkup = [];
+const gallery = document.querySelector(".gallery");
+
+for(const {preview, original, description} of images) {
+  const galleryItem = `<li class="gallery-item">
+  <a class="gallery-link" href="${preview}">
+    <img
+      class="gallery-image"
+      src="${preview}"
+      data-source="${original}"
+      alt="${description}"
+    />
+  </a>
+</li>`
+galleryItemsMarkup.push(galleryItem);
+}
+
+console.log((galleryItemsMarkup.join(" ")));
+
+gallery.insertAdjacentHTML("afterbegin", galleryItemsMarkup.join(" "));
+
