@@ -75,15 +75,11 @@ for (const { preview, original, description } of images) {
       src="${preview}"
       data-source="${original}"
       alt="${description}"
-      width="360"
-      height="200"
     />
   </a>
 </li>`;
   galleryItemsMarkup.push(galleryItem);
 }
-
-console.log(galleryItemsMarkup.join(' '));
 
 gallery.insertAdjacentHTML('afterbegin', galleryItemsMarkup.join(' '));
 
@@ -95,10 +91,9 @@ document.querySelector('.gallery').onclick = event => {
     const lightbox = basicLightbox
       .create(
         `
-        <img width="" height="" src="${event.target.dataset.source}">
+        <img src="${event.target.dataset.source}">
       `
       );
-
       lightbox.show();
   }
 };
