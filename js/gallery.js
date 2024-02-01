@@ -85,15 +85,24 @@ gallery.insertAdjacentHTML('afterbegin', galleryItemsMarkup.join(' '));
 
 // ============================= ADDING MODAL WINDOW WITH LIGHBOX ========================================
 
+let lightbox;
+
 document.querySelector('.gallery').onclick = event => {
   if (event.target.classList.contains('gallery-image')) {
     event.preventDefault();
-    const lightbox = basicLightbox
-      .create(
-        `
+    lightbox = basicLightbox.create(
+      `
         <img src="${event.target.dataset.source}">
       `
-      );
-      lightbox.show();
+    );
+    lightbox.show();
   }
 };
+
+// ======================== ADDED ABILITY TO CLOSE MODAL BY CLICKING ESCAPE BTN ===========================
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    lightbox.close();
+  }
+});
