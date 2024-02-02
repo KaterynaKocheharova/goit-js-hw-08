@@ -66,8 +66,9 @@ const images = [
 
 const gallery = document.querySelector('.gallery');
 
-const galleryMarkup = images.map(({ preview, original, description }) => {
-  return `<li class="gallery-item">
+const galleryMarkup = images
+  .map(({ preview, original, description }) => {
+    return `<li class="gallery-item">
    <a class="gallery-link" href="${preview}">
     <img
       class="gallery-image"
@@ -76,7 +77,8 @@ const galleryMarkup = images.map(({ preview, original, description }) => {
      alt="${description}"
    />
   </a> </li>`;
-}).join(" ");
+  })
+  .join(' ');
 
 gallery.insertAdjacentHTML('afterbegin', galleryMarkup);
 
@@ -110,6 +112,5 @@ function handleGalleryClicking(event) {
 function handleCloseLightbox(event) {
   if (event.key === 'Escape' && lightbox) {
     lightbox.close();
-    console.log('event listener removed');
   }
 }
