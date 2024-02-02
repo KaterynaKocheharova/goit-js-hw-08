@@ -64,45 +64,52 @@ const images = [
   },
 ];
 
-const galleryItemsMarkup = [];
 const gallery = document.querySelector('.gallery');
 
-for (const { preview, original, description } of images) {
-  const galleryItem = `<li class="gallery-item">
-  <a class="gallery-link" href="${preview}">
+const galleryMarkup = images.map(({ preview, original, description }) => {
+  return `<li class="gallery-item">
+   <a class="gallery-link" href="${preview}">
     <img
       class="gallery-image"
-      src="${preview}"
-      data-source="${original}"
-      alt="${description}"
-    />
-  </a>
-</li>`;
-  galleryItemsMarkup.push(galleryItem);
-}
+       src="${preview}"
+     data-source="${original}"
+     alt="${description}"
+   />
+  </a> </li>`;
+}).join(" ");
 
-gallery.insertAdjacentHTML('afterbegin', galleryItemsMarkup.join(' '));
+gallery.insertAdjacentHTML('afterbegin', galleryMarkup);
 
 // ============================= ADDING MODAL WINDOW WITH LIGHBOX ========================================
 
 let lightbox;
 
-document.querySelector('.gallery').onclick = event => {
+gallery.addEventListener('click', handleGalleryClicking);
+
+function handleGalleryClicking(event) {
   if (event.target.classList.contains('gallery-image')) {
     event.preventDefault();
     lightbox = basicLightbox.create(
       `
         <img src="${event.target.dataset.source}">
-      `
+      `,
+      {
+        className: 'image-lightbox',
+        onShow: instance => {
+          document.addEventListener('keydown', handleCloseLightbox);
+        },
+        onClose: instance => {
+          document.removeEventListener('keydown', handleCloseLightbox);
+        },
+      }
     );
     lightbox.show();
   }
-};
+}
 
-// ======================== ADDED ABILITY TO CLOSE MODAL BY CLICKING ESCAPE BTN ===========================
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') {
+function handleCloseLightbox(event) {
+  if (event.key === 'Escape' && lightbox) {
     lightbox.close();
+    console.log('event listener removed');
   }
-});
+}
